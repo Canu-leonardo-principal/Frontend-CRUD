@@ -1,30 +1,30 @@
-<table class="table">
+<table class="table table-dark table-striped">
   <thead>
     <tr>
-      <th scope="col">Id</th>
       <th scope="col">Name</th>
       <th scope="col">Surname</th>
       <th scope="col">Gender</th>
       <th scope="col">Hire Date</th>
       <th scope="col">Birth Date</th>
+      <th scope="col"></th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let employee of Employees">
-      <td>{{this.employee.id}}</td>
       <td>{{this.employee.firstName}}</td>  
       <td>{{this.employee.lastName}}</td>
       <td>{{this.employee.gender}}</td>
       <td>{{this.employee.hireDate}}</td>
       <td>{{this.employee.birthDate}}</td>
+      <td><button class="btn btn-danger" (click)="RemoveData(this.employee.id)">Remove</button></td>
     </tr>
   </tbody>
 </table>
 
 <div class="row">
-  <div class="col-2"><button (click)="FirstPage()" [disabled]="this.CurrentPage == 0">First Page</button></div>
-  <div class="col-2"><button (click)="PrevPage()" [disabled]="this.CurrentPage == 0">Prev. Page</button></div>
-  <div class="col-4">{{this.CurrentPage}}</div>
-  <div class="col-2"><button (click)="NextPage()" [disabled]="this.CurrentPage == this.NumPages">Next Page</button></div>
-  <div class="col-2"><button (click)="LastPage()" [disabled]="this.CurrentPage == this.NumPages">Last Page</button></div>
+  <div class="col-2"><button class="btn btn-success"   (click)="FirstPage()" [disabled]="this.CurrentPage == 0">First</button></div>
+  <div class="col-3"><button class="btn btn-secondary" (click)="PrevPage()" [disabled]="this.CurrentPage == 0">Previous</button></div>
+  <div class="col-2" style="color: white"><p>{{this.CurrentPage}}</p></div>
+  <div class="col-3"><button class="btn btn-info"    (click)="NextPage()" [disabled]="this.CurrentPage === this.NumPages">Next</button></div>
+  <div class="col-2"><button class="btn btn-warning" (click)="LastPage()" [disabled]="this.CurrentPage === this.NumPages">Last</button></div>
 </div>

@@ -17,12 +17,13 @@ export class MyTableComponent implements OnInit {
   PrevPageUrl:  any;
   NextPageUrl:  any;
   LastPageUrl:  any;
+  CurrPageURL:  any;
 
   CurrentPage: any;
   NumPages: any;
   //=====================================================================================================
   //CONSTRUCTOR==========================================================================================
-  constructor ( private employeeService: EmployeeService){
+  constructor ( public employeeService: EmployeeService){
     this.loadData("http://localhost:8080/employees");
     this.Employees = this.data?._embedded.employees;
   }
@@ -35,20 +36,21 @@ export class MyTableComponent implements OnInit {
         this.Employees = this.data._embedded.employees;
         
         this.CurrentPage = this.data.page.number;
-        this.NumPages = this.data.page.totalPages;
+        this.NumPages = this.data.page.totalPages - 1;
         
-        this.FirstPageUrl = this.data._links.first.href;
-        this.LastPageUrl  = this.data._links.last.href;
+        if ( this.CurrentPage !== this.NumPages){  this.LastPageUrl  = this.data._links.last.href; }
+          else { this.NextPageUrl = "http://localhost:8080/employees"; }
         if ( this.CurrentPage !== this.NumPages){  this.NextPageUrl  = this.data._links.next.href;  }
           else { this.NextPageUrl = "http://localhost:8080/employees"; }
         if ( this.CurrentPage !== 0 ){ this.PrevPageUrl  = this.data._links.prev.href }
           else { this.PrevPageUrl = "http://localhost:8080/employees"; }
+        if ( this.CurrentPage !== 0 ){ this.FirstPageUrl = this.data._links.first.href; }
+          else { this.PrevPageUrl = "http://localhost:8080/employees"; }          
+        this.CurrPageURL = this.data._links.self.href;
       }
     )
   }
-  //=====================================================================================================
   FirstPage() : void{
-    console.log(this.FirstPageUrl);
     this.loadData(this.FirstPageUrl);
   }
   PrevPage():void{
@@ -60,6 +62,11 @@ export class MyTableComponent implements OnInit {
   LastPage() : void{
     this.loadData(this.LastPageUrl);
   }
+  RemoveData(Index: number) : void{  
+    this.employeeService.removeData(Index);
+    window.location.reload();
+  }
+
   //=====================================================================================================
   ngOnInit(): void {}
 }

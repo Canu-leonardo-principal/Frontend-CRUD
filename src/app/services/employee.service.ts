@@ -13,4 +13,9 @@ export class EmployeeService {
     const params = new  HttpParams().set('page', pageNum || 0).set('size', size || 10);
     return this.http.get<ServerData>(url, {params: params});
   }
+  removeData(Index : number) {
+    const url : string = "http://localhost:8080/employees/" + Index;
+    console.log(url);
+    return this.http.delete(url).subscribe();
+  }
 }
