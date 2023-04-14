@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Employee, ServerData } from '../types/Employee';
 import { EmployeeService } from '../services/employee.service';
-import { MatTableDataSource } from '@angular/material';
 
 @Component({
   selector: 'app-my-table',
@@ -11,25 +10,55 @@ import { MatTableDataSource } from '@angular/material';
 export class MyTableComponent implements OnInit {
   //ATTRIBUTI============================================================================================
   displayedColumns: string[] = ['id', 'birthDate', 'firstName', 'lastName', 'gender', 'hireDate'];
-
   data: ServerData | undefined;
-  dataSource: MatTableDataSource<Employee>;
-  
+  Employees: any;
+
+  FirstPageUrl: any;
+  PrevPageUrl:  any;
+  NextPageUrl:  any;
+  LastPageUrl:  any;
+
+  CurrentPage: any;
+  NumPages: any;
+  //=====================================================================================================
   //CONSTRUCTOR==========================================================================================
   constructor ( private employeeService: EmployeeService){
     this.loadData("http://localhost:8080/employees");
-    this.dataSource = new MatTableDataSource(this.data?._embedded.employees);
+    this.Employees = this.data?._embedded.employees;
   }
   //=====================================================================================================
-
   //METHODS==============================================================================================
   loadData(url: string){
     this.employeeService.getData(url).subscribe(
       serverResponse => {
         this.data = serverResponse;
-        this.dataSource.data = this.data?._embedded.employees;
+        this.Employees = this.data._embedded.employees;
+        
+        this.CurrentPage = this.data.page.number;
+        this.NumPages = this.data.page.totalPages;
+        
+        this.FirstPageUrl = this.data._links.first.href;
+        this.LastPageUrl  = this.data._links.last.href;
+        if ( this.CurrentPage !== this.NumPages){  this.NextPageUrl  = this.data._links.next.href;  }
+          else { this.NextPageUrl = "http://localhost:8080/employees"; }
+        if ( this.CurrentPage !== 0 ){ this.PrevPageUrl  = this.data._links.prev.href }
+          else { this.PrevPageUrl = "http://localhost:8080/employees"; }
       }
     )
+  }
+  //=====================================================================================================
+  FirstPage() : void{
+    console.log(this.FirstPageUrl);
+    this.loadData(this.FirstPageUrl);
+  }
+  PrevPage():void{
+    this.loadData(this.PrevPageUrl);
+  }
+  NextPage() :void{
+    this.loadData(this.NextPageUrl);
+  }
+  LastPage() : void{
+    this.loadData(this.LastPageUrl);
   }
   //=====================================================================================================
   ngOnInit(): void {}

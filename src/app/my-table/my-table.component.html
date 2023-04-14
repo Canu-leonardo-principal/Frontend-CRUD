@@ -1,13 +1,30 @@
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-  
-    <!-- Name Column -->
-    <ng-container matColumnDef="Name">
-      <th mat-header-cell *matHeaderCellDef> Nome. </th>
-      <td mat-cell *matCellDef="let element"> {{element.firstname}} </td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">Name</th>
+      <th scope="col">Surname</th>
+      <th scope="col">Gender</th>
+      <th scope="col">Hire Date</th>
+      <th scope="col">Birth Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let employee of Employees">
+      <td>{{this.employee.id}}</td>
+      <td>{{this.employee.firstName}}</td>  
+      <td>{{this.employee.lastName}}</td>
+      <td>{{this.employee.gender}}</td>
+      <td>{{this.employee.hireDate}}</td>
+      <td>{{this.employee.birthDate}}</td>
+    </tr>
+  </tbody>
 </table>
-  
-  
+
+<div class="row">
+  <div class="col-2"><button (click)="FirstPage()" [disabled]="this.CurrentPage == 0">First Page</button></div>
+  <div class="col-2"><button (click)="PrevPage()" [disabled]="this.CurrentPage == 0">Prev. Page</button></div>
+  <div class="col-4">{{this.CurrentPage}}</div>
+  <div class="col-2"><button (click)="NextPage()" [disabled]="this.CurrentPage == this.NumPages">Next Page</button></div>
+  <div class="col-2"><button (click)="LastPage()" [disabled]="this.CurrentPage == this.NumPages">Last Page</button></div>
+</div>
