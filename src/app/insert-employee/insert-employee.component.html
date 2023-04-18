@@ -1,0 +1,30 @@
+<div class ="contenitore">
+    <form [formGroup]="myForm">
+        <div class="mb-3">
+          <label for="name" class="form-label"><b>Name</b></label>
+          <input type="text" class="form-control" formControlName="firstName">
+        </div>
+        <div class="mb-3">
+            <label for="name" class="form-label"><b>Surname</b></label>
+            <input type="text" class="form-control" formControlName="lastName">
+        </div>
+        <div class="mb-3">
+            <label for="name" class="form-label"><b>Gender</b></label>
+            <select class="form-select" formControlName="gender">
+                <option value="M">Male</option>
+                <option value="F">Female</option>
+                <option value="O">Other</option>
+              </select>
+        </div>
+        <div class="mb-3">
+            <label for="name" class="form-label"><b>Hire Date</b></label>
+            <input type="date" class="form-control" formControlName="hireDate">
+        </div>
+        <div class="mb-3">
+            <label for="name" class="form-label"><b>Birth Date</b></label>
+            <input type="date" class="form-control" formControlName="birthDate">
+        </div>
+        
+        <button class="btn btn-success" (click)="submit()">Submit</button>
+    </form>
+</div>

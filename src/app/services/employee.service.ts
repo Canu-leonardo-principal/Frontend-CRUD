@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { ServerData } from '../types/Employee';
+import { Employee, ServerData } from '../types/Employee';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -15,7 +15,11 @@ export class EmployeeService {
   }
   removeData(Index : number) {
     const url : string = "http://localhost:8080/employees/" + Index;
-    console.log(url);
-    return this.http.delete(url).subscribe();
+    //console.log(url);
+    return this.http.delete(url);
+  }
+
+  postData(employee: Employee): Observable<ServerData>{
+    return this.http.post<ServerData>("http://localhost:8080/employees", employee);
   }
 }

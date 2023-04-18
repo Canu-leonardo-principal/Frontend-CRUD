@@ -32,6 +32,7 @@ export class MyTableComponent implements OnInit {
   loadData(url: string){
     this.employeeService.getData(url).subscribe(
       serverResponse => {
+        this.CurrPageURL = url;
         this.data = serverResponse;
         this.Employees = this.data._embedded.employees;
         
@@ -46,7 +47,7 @@ export class MyTableComponent implements OnInit {
           else { this.PrevPageUrl = "http://localhost:8080/employees"; }
         if ( this.CurrentPage !== 0 ){ this.FirstPageUrl = this.data._links.first.href; }
           else { this.PrevPageUrl = "http://localhost:8080/employees"; }          
-        this.CurrPageURL = this.data._links.self.href;
+        //this.CurrPageURL = this.data._links.self.href;
       }
     )
   }
@@ -63,8 +64,9 @@ export class MyTableComponent implements OnInit {
     this.loadData(this.LastPageUrl);
   }
   RemoveData(Index: number) : void{  
-    this.employeeService.removeData(Index);
-    window.location.reload();
+    this.employeeService.removeData(Index).subscribe(()=>{
+      this.loadData(this.CurrPageURL);      
+    });
   }
 
   //=====================================================================================================
