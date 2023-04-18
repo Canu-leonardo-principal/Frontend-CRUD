@@ -68,6 +68,9 @@ export class MyTableComponent implements OnInit {
       this.loadData(this.CurrPageURL);      
     });
   }
+  edit(employee: Employee):void{
+    console.log(employee.firstName);
+  }
 
   //=====================================================================================================
   ngOnInit(): void {}
