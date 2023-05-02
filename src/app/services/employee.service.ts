@@ -15,11 +15,14 @@ export class EmployeeService {
   }
   removeData(Index : number) {
     const url : string = "http://localhost:8080/employees/" + Index;
-    //console.log(url);
     return this.http.delete(url);
   }
 
   postData(employee: Employee): Observable<ServerData>{
     return this.http.post<ServerData>("http://localhost:8080/employees", employee);
+  }
+
+  putData(employee: Employee): Observable<ServerData>{
+    return this.http.put<ServerData>("http://localhost:8080/employees/" + employee.id, employee);
   }
 }

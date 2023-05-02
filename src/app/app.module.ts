@@ -5,7 +5,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MyTableComponent } from './my-table/my-table.component';
 import { MatTableModule } from '@angular/material/table';
-import { InsertEmployeeComponent } from './insert-employee/insert-employee.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import { EditButtonComponent } from './edit-button/edit-button.component'; 
 
@@ -13,7 +12,6 @@ import { EditButtonComponent } from './edit-button/edit-button.component';
   declarations: [
     AppComponent,
     MyTableComponent,
-    InsertEmployeeComponent,
     EditButtonComponent,
   ],
   imports: [
